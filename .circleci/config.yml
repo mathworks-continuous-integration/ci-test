@@ -9,7 +9,7 @@ orbs:
   matlab: mathworks/matlab@0
 
 jobs:
-  run_tests:
+  test:
     executor: default
     parameters:
       MATHWORKS_LICENSING_ENDPOINT:
@@ -24,9 +24,9 @@ jobs:
           command: assertSuccess(runtests())
 
 workflows:
-  build:
+  all-tests:
     jobs:
-      - ci/run_tests:
+      - test:
           matrix:
             parameters:
               MATHWORKS_LICENSING_ENDPOINT: ["prod", "stage", "dev"]
