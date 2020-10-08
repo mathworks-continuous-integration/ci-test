@@ -1,0 +1,27 @@
+name: Trigger builds
+
+on:
+  workflow_dispatch:
+
+jobs:
+  pipelines:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Trigger Azure Pipelines build
+      uses: Azure/pipelines@v1
+      with:
+        azure-devops-project-url: 'https://dev.azure.com/mathworks-continuous-integration/ci-test'
+        azure-pipeline-name: 'mathworks-continuous-integration.ci-test'
+        azure-devops-token: '${{ secrets.PIPELINES_TOKEN }}'
+  
+  circle:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Trigger CircleCI build
+      run: 'curl -u ${{ secrets.CIRCLE_TOKEN }}: -X POST --header "Content-Type: application/json" -d ''{"branch":"main"}'' https://circleci.com/api/v1.1/project/github/mathworks-continuous-integration/ci-test/build'
+        
+  travis:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Trigger Travis CI build
+      run: 'curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Travis-API-Version: 3" -H "Authorization: token ${{ secrets.TRAVIS_TOKEN }}" -d ''{"request":{"branch":"main"}}'' https://api.travis-ci.com/repo/mathworks-continuous-integration\%2Fci-test/requests'
