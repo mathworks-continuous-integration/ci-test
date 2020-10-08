@@ -1,34 +1,32 @@
 version: 2.1
+
+executors:
+  default:
+    machine:
+      image: ubuntu-1604:201903-01
+
+orbs:
+  matlab: mathworks/matlab@0
+
+jobs:
+  run_tests:
+    executor: default
+    parameters:
+      MATHWORKS_LICENSING_ENDPOINT:
+        type: string
+        default: ''
+    environment:
+      MATHWORKS_LICENSING_ENDPOINT: <<parameters.MATHWORKS_LICENSING_ENDPOINT>>
+    steps:
+      - checkout
+      - matlab/install
+      - matlab/run-command:
+          command: assertSuccess(runtests())
+
 workflows:
   build:
     jobs:
       - ci/run_tests:
-          name: Prod
-          MATHWORKS_LICENSING_ENDPOINT: prod
-      - ci/run_tests:
-          name: Stage
-          MATHWORKS_LICENSING_ENDPOINT: stage
-      - ci/run_tests:
-          name: Dev
-          MATHWORKS_LICENSING_ENDPOINT: dev
-orbs:
-  matlab: mathworks/matlab@0
-  ci:
-    executors:
-      default:
-        machine:
-          image: ubuntu-1604:201903-01
-    jobs:
-      run_tests:
-        executor: default
-        parameters:
-          MATHWORKS_LICENSING_ENDPOINT:
-            type: string
-            default: ''
-        environment:
-          MATHWORKS_LICENSING_ENDPOINT: <<parameters.MATHWORKS_LICENSING_ENDPOINT>>
-        steps:
-          - checkout
-          - matlab/install
-          - matlab/run-command:
-              command: assertSuccess(runtests())
+          matrix:
+            parameters:
+              MATHWORKS_LICENSING_ENDPOINT: ["prod", "stage", "dev"]

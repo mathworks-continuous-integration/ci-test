@@ -13,7 +13,7 @@ jobs:
     steps:
       - task: InstallMATLAB@0
         env:
-          MATHWORKS_TOKEN: $(MATHWORKS_TOKEN)
+          MATHWORKS_LICENSING_ENDPOINT: $(MATHWORKS_LICENSING_ENDPOINT)
       - task: RunMATLABCommand@0
         inputs:
           command: assertSuccess(runtests())
