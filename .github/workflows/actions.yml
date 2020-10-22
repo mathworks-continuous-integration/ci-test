@@ -1,0 +1,18 @@
+name: GitHub Actions Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        stage: ['prod', 'stage', 'dev']
+    env:
+      MATHWORKS_LICENSING_ENDPOINT: ${{ matrix.stage }}
+    steps:
+      - name: Set up MATLAB
+        run: wget -qO- --retry-connrefused "https://ssd.mathworks.com/supportfiles/ci/ephemeral-matlab/v0/ci-install.sh" | sudo -E bash
+      - name: Run tests
+        run: matlab -batch "assertSuccess(runtests())"
