@@ -25,3 +25,15 @@ jobs:
     steps:
     - name: Trigger Travis CI build
       run: 'curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Travis-API-Version: 3" -H "Authorization: token ${{ secrets.TRAVIS_TOKEN }}" -d ''{"request":{"branch":"main"}}'' https://api.travis-ci.com/repo/mathworks-continuous-integration\%2Fci-test/requests'
+
+  actions:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Trigger GitHub Actions build
+      run: |
+        curl --request POST \
+          --url https://api.github.com/repos/mathworks-continuous-integration/ci-test/actions/workflows/actions.yml/dispatches \
+          --header 'accept: application/vnd.github.v3+json' \
+          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'content-type: application/json' \
+          --data '{"ref": "main"}'
