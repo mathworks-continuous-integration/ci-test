@@ -32,8 +32,8 @@ jobs:
     - name: Trigger GitHub Actions build
       run: |
         curl --request POST \
-          --url https://api.github.com/repos/mathworks-continuous-integration/ci-test/actions/workflows/actions.yml/dispatches \
+          --url https://api.github.com/repos/mathworks-continuous-integration/ci-test/dispatches \
           --header 'accept: application/vnd.github.v3+json' \
           --header 'authorization: Bearer ${{ secrets.ACTIONS_TOKEN }}' \
           --header 'content-type: application/json' \
-          --data '{"ref": "main"}'
+          --data '{"event_type": "batch-trigger"}'

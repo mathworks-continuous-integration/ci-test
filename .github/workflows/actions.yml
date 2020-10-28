@@ -1,6 +1,11 @@
 name: GitHub Actions Test
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [batch-trigger]
 
 jobs:
   test:
@@ -11,6 +16,7 @@ jobs:
     env:
       MATHWORKS_LICENSING_ENDPOINT: ${{ matrix.stage }}
     steps:
+      - uses: actions/checkout@v2
       - name: Set up MATLAB
         run: wget -qO- --retry-connrefused "https://ssd.mathworks.com/supportfiles/ci/ephemeral-matlab/v0/ci-install.sh" | sudo -E bash
       - name: Run tests
