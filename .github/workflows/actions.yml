@@ -11,6 +11,7 @@ jobs:
   test:
     runs-on: ubuntu-18.04
     strategy:
+      fail-fast: false
       matrix:
         stage: ['prod', 'stage', 'dev']
     env:
