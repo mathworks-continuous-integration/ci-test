@@ -19,6 +19,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up MATLAB
-        run: wget -qO- --retry-connrefused "https://ssd.mathworks.com/supportfiles/ci/ephemeral-matlab/v0/ci-install.sh" | sudo -E bash
+        uses: matlab-actions/setup-matlab
       - name: Run tests
-        run: matlab -batch "assertSuccess(runtests())"
+        uses: matlab-actions/run-tests
