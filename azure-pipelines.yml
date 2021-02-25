@@ -30,4 +30,5 @@ jobs:
           MATHWORKS_LICENSING_ENDPOINT: $(MATHWORKS_LICENSING_ENDPOINT)
       - task: RunMATLABCommand@0
         inputs:
-          command: assertSuccess(runtests())
+          command: version
+      - task: RunMATLABTests@0

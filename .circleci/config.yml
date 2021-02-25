@@ -25,7 +25,8 @@ jobs:
       - matlab/install:
           release: <<parameters.RELEASE>>
       - matlab/run-command:
-          command: assertSuccess(runtests())
+          command: version
+      - matlab/run-tests
 
 workflows:
   all-tests:

@@ -23,5 +23,9 @@ jobs:
         uses: matlab-actions/setup-matlab@v0
         with:
           release: ${{ matrix.release }}
+      - name: Display version
+        uses: matlab-actions/run-command@v0
+        with:
+          command: version
       - name: Run tests
         uses: matlab-actions/run-tests@v0
