@@ -4,14 +4,28 @@ jobs:
       vmImage: 'Ubuntu 16.04'
     strategy:
       matrix:
-        "Prod":
+        "Prod-Latest":
           MATHWORKS_LICENSING_ENDPOINT: prod
-        "Stage":
+          RELEASE: latest
+        "Prod-R2020a":
+          MATHWORKS_LICENSING_ENDPOINT: prod
+          RELEASE: R2020a
+        "Stage-Latest":
           MATHWORKS_LICENSING_ENDPOINT: stage
-        "Dev":
+          RELEASE: latest
+        "Stage-R2020a":
+          MATHWORKS_LICENSING_ENDPOINT: stage
+          RELEASE: R2020a
+        "Dev-Latest":
           MATHWORKS_LICENSING_ENDPOINT: dev
+          RELEASE: latest
+        "Dev-R2020a":
+          MATHWORKS_LICENSING_ENDPOINT: dev
+          RELEASE: R2020a
     steps:
       - task: InstallMATLAB@0
+        inputs:
+          release: $(RELEASE)
         env:
           MATHWORKS_LICENSING_ENDPOINT: $(MATHWORKS_LICENSING_ENDPOINT)
       - task: RunMATLABCommand@0

@@ -1,4 +1,7 @@
 language: matlab
+matlab:
+- latest
+- R2020a
 env:
 - MATHWORKS_LICENSING_ENDPOINT=prod
 - MATHWORKS_LICENSING_ENDPOINT=stage
