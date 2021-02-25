@@ -15,6 +15,9 @@ jobs:
       MATHWORKS_LICENSING_ENDPOINT:
         type: string
         default: ''
+      RELEASE:
+        type: string
+        default: ''
     environment:
       MATHWORKS_LICENSING_ENDPOINT: <<parameters.MATHWORKS_LICENSING_ENDPOINT>>
     steps:
