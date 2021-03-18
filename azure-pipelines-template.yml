@@ -1,0 +1,17 @@
+jobs:
+  - ${{ each endpoint in parameters.MATHWORKS_LICENSING_ENDPOINT }}:
+    - ${{ each release in parameters.RELEASE }}:
+      - job:
+        displayName: ${{ format('{0} {1}', endpoint, release) }}
+        pool:
+          vmImage: 'Ubuntu 16.04'
+        steps:
+          - task: InstallMATLAB@0
+            inputs:
+              release: ${{ release }}
+            env:
+              MATHWORKS_LICENSING_ENDPOINT: ${{ endpoint }}
+          - task: RunMATLABCommand@0
+            inputs:
+              command: version
+          - task: RunMATLABTests@0

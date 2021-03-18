@@ -1,5 +1,10 @@
 language: matlab
+matlab:
+- latest
+- R2020b
+- R2020a
 env:
 - MATHWORKS_LICENSING_ENDPOINT=prod
 - MATHWORKS_LICENSING_ENDPOINT=stage
 - MATHWORKS_LICENSING_ENDPOINT=dev
+script: matlab -batch 'version, assertSuccess(runtests())'

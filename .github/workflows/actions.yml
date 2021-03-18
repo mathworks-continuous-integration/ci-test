@@ -14,11 +14,18 @@ jobs:
       fail-fast: false
       matrix:
         stage: ['prod', 'stage', 'dev']
+        release: ['latest', 'R2020b', 'R2020a']
     env:
       MATHWORKS_LICENSING_ENDPOINT: ${{ matrix.stage }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up MATLAB
         uses: matlab-actions/setup-matlab@v0
+        with:
+          release: ${{ matrix.release }}
+      - name: Display version
+        uses: matlab-actions/run-command@v0
+        with:
+          command: version
       - name: Run tests
         uses: matlab-actions/run-tests@v0

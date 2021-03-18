@@ -15,13 +15,18 @@ jobs:
       MATHWORKS_LICENSING_ENDPOINT:
         type: string
         default: ''
+      RELEASE:
+        type: string
+        default: ''
     environment:
       MATHWORKS_LICENSING_ENDPOINT: <<parameters.MATHWORKS_LICENSING_ENDPOINT>>
     steps:
       - checkout
-      - matlab/install
+      - matlab/install:
+          release: <<parameters.RELEASE>>
       - matlab/run-command:
-          command: assertSuccess(runtests())
+          command: version
+      - matlab/run-tests
 
 workflows:
   all-tests:
@@ -30,3 +35,4 @@ workflows:
           matrix:
             parameters:
               MATHWORKS_LICENSING_ENDPOINT: ["prod", "stage", "dev"]
+              RELEASE: ['latest', 'R2020b', 'R2020a']
