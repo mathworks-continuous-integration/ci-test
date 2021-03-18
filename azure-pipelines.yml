@@ -1,34 +1,21 @@
+parameters:
+  MATHWORKS_LICENSING_ENDPOINT: ["prod", "stage", "dev"]
+  RELEASE: ['latest', 'R2020b', 'R2020a']
+
 jobs:
-  - job: build
-    pool:
-      vmImage: 'Ubuntu 16.04'
-    strategy:
-      matrix:
-        "Prod-Latest":
-          MATHWORKS_LICENSING_ENDPOINT: prod
-          RELEASE: latest
-        "Prod-R2020a":
-          MATHWORKS_LICENSING_ENDPOINT: prod
-          RELEASE: R2020a
-        "Stage-Latest":
-          MATHWORKS_LICENSING_ENDPOINT: stage
-          RELEASE: latest
-        "Stage-R2020a":
-          MATHWORKS_LICENSING_ENDPOINT: stage
-          RELEASE: R2020a
-        "Dev-Latest":
-          MATHWORKS_LICENSING_ENDPOINT: dev
-          RELEASE: latest
-        "Dev-R2020a":
-          MATHWORKS_LICENSING_ENDPOINT: dev
-          RELEASE: R2020a
-    steps:
-      - task: InstallMATLAB@0
-        inputs:
-          release: $(RELEASE)
-        env:
-          MATHWORKS_LICENSING_ENDPOINT: $(MATHWORKS_LICENSING_ENDPOINT)
-      - task: RunMATLABCommand@0
-        inputs:
-          command: version
-      - task: RunMATLABTests@0
+  - ${{ each endpoint in parameters.MATHWORKS_LICENSING_ENDPOINT }}:
+    - ${{ each release in parameters.RELEASE }}:
+      - job:
+        displayName: ${{ format('{0} {1}', endpoint, release) }}
+        pool:
+          vmImage: 'Ubuntu 16.04'
+        steps:
+          - task: InstallMATLAB@0
+            inputs:
+              release: ${{ release }}
+            env:
+              MATHWORKS_LICENSING_ENDPOINT: ${{ endpoint }}
+          - task: RunMATLABCommand@0
+            inputs:
+              command: version
+          - task: RunMATLABTests@0

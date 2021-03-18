@@ -35,4 +35,4 @@ workflows:
           matrix:
             parameters:
               MATHWORKS_LICENSING_ENDPOINT: ["prod", "stage", "dev"]
-              RELEASE: ['latest', 'R2020a']
+              RELEASE: ['latest', 'R2020b', 'R2020a']
