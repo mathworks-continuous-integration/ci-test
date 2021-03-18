@@ -31,10 +31,11 @@ jobs:
       - matlab/install:
           release: <<parameters.RELEASE>>
       - matlab/run-command:
-          command: assertSuccess(runtests('tinstall'))
+          command: version
       - matlab/run-tests
 
 workflows:
+  # Test all licensing endpoints against oldest and newest MATLAB release
   test-licws:
     jobs:
       - test-install:
@@ -42,6 +43,8 @@ workflows:
             parameters:
               MATHWORKS_LICENSING_ENDPOINT: ['prod', 'stage', 'dev']
               RELEASE: ['latest', 'R2020a']
+
+  # Test all MATLAB releases against all supported executors
   test-releases:
     jobs:
       - test-install:

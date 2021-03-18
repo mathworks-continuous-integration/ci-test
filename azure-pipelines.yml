@@ -1,5 +1,15 @@
 jobs:
+  # Test all licensing endpoints against oldest and newest MATLAB release
   - template: azure-pipelines-template.yml
     parameters:
-      MATHWORKS_LICENSING_ENDPOINT: ["prod", "stage", "dev"]
+      
+      MATHWORKS_LICENSING_ENDPOINT: ['prod', 'stage', 'dev']
+      RELEASE: ['latest', 'R2020a']
+      IMAGE: ['ubuntu-latest']
+      
+  # Test all MATLAB releases against all supported images
+  - template: azure-pipelines-template.yml
+    parameters:
+      MATHWORKS_LICENSING_ENDPOINT: ['prod']
       RELEASE: ['latest', 'R2020b', 'R2020a']
+      IMAGE: ['ubuntu-20.04, 'ubuntu-18.04', 'ubuntu-16.04']

@@ -1,10 +1,26 @@
 language: matlab
+# Test all MATLAB releases against all supported distros
 matlab:
 - latest
 - R2020b
 - R2020a
-env:
-- MATHWORKS_LICENSING_ENDPOINT=prod
-- MATHWORKS_LICENSING_ENDPOINT=stage
-- MATHWORKS_LICENSING_ENDPOINT=dev
+dist:
+- focal
+- bionic
+- xenial
+jobs:
+  # Test all licensing endpoints against oldest and newest MATLAB release
+  include:
+  - matlab: latest
+    env: MATHWORKS_LICENSING_ENDPOINT=prod
+  - matlab: R2020a
+    env: MATHWORKS_LICENSING_ENDPOINT=prod
+  - matlab: latest
+    env: MATHWORKS_LICENSING_ENDPOINT=stage
+  - matlab: R2020a
+    env: MATHWORKS_LICENSING_ENDPOINT=stage
+  - matlab: latest
+    env: MATHWORKS_LICENSING_ENDPOINT=dev
+  - matlab: R2020a
+    env: MATHWORKS_LICENSING_ENDPOINT=dev
 script: matlab -batch 'version, assertSuccess(runtests())'

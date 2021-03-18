@@ -1,17 +1,18 @@
 jobs:
   - ${{ each endpoint in parameters.MATHWORKS_LICENSING_ENDPOINT }}:
     - ${{ each release in parameters.RELEASE }}:
-      - job:
-        displayName: ${{ format('{0} {1}', endpoint, release) }}
-        pool:
-          vmImage: 'Ubuntu 16.04'
-        steps:
-          - task: InstallMATLAB@0
-            inputs:
-              release: ${{ release }}
-            env:
-              MATHWORKS_LICENSING_ENDPOINT: ${{ endpoint }}
-          - task: RunMATLABCommand@0
-            inputs:
-              command: version
-          - task: RunMATLABTests@0
+      - ${{ each image in parameters.IMAGE }}:
+        - job:
+          displayName: ${{ format('{0} {1} {2}', endpoint, release, image) }}
+          pool:
+            vmImage: ${{ image }}
+          steps:
+            - task: InstallMATLAB@0
+              inputs:
+                release: ${{ release }}
+              env:
+                MATHWORKS_LICENSING_ENDPOINT: ${{ endpoint }}
+            - task: RunMATLABCommand@0
+              inputs:
+                command: version
+            - task: RunMATLABTests@0
