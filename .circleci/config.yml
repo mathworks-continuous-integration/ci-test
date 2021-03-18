@@ -12,7 +12,7 @@ executors:
       image: ubuntu-2004:202101-01
 
 jobs:
-  test-licws:
+  test-install:
     parameters:
       MATHWORKS_LICENSING_ENDPOINT:
         type: string
@@ -37,14 +37,14 @@ jobs:
 workflows:
   test-licws:
     jobs:
-      - test-licws-matrix:
+      - test-install:
           matrix:
             parameters:
               MATHWORKS_LICENSING_ENDPOINT: ['prod', 'stage', 'dev']
               RELEASE: ['latest', 'R2020a']
   test-releases:
     jobs:
-      - test-releases-matrix:
+      - test-install:
           matrix:
             parameters:
               RELEASE: ['latest', 'R2020b', 'R2020a']
