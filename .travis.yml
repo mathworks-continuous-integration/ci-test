@@ -1,13 +1,9 @@
 language: matlab
-# Test all MATLAB releases against all supported distros
+# Test all MATLAB releases
 matlab:
 - latest
 - R2020b
 - R2020a
-dist:
-- focal
-- bionic
-- xenial
 jobs:
   # Test all licensing endpoints against oldest and newest MATLAB release
   include:
