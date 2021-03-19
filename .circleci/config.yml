@@ -1,23 +1,29 @@
 version: 2.1
 
-executors:
-  default:
-    machine:
-      image: ubuntu-1604:201903-01
-
 orbs:
   matlab: mathworks/matlab@0
 
+executors:
+  ubuntu-1604:
+    machine:
+      image: ubuntu-1604:202101-01
+  ubuntu-2004:
+    machine:
+      image: ubuntu-2004:202101-01
+
 jobs:
-  test:
-    executor: default
+  test-install:
     parameters:
       MATHWORKS_LICENSING_ENDPOINT:
         type: string
-        default: ''
+        default: prod
       RELEASE:
         type: string
-        default: ''
+        default: latest
+      EXECUTOR:
+        type: executor
+        default: ubuntu-1604
+    executor: <<parameters.EXECUTOR>>
     environment:
       MATHWORKS_LICENSING_ENDPOINT: <<parameters.MATHWORKS_LICENSING_ENDPOINT>>
     steps:
@@ -29,10 +35,20 @@ jobs:
       - matlab/run-tests
 
 workflows:
-  all-tests:
+  # Test all licensing endpoints against oldest and newest MATLAB release
+  test-licws:
     jobs:
-      - test:
+      - test-install:
           matrix:
             parameters:
-              MATHWORKS_LICENSING_ENDPOINT: ["prod", "stage", "dev"]
+              MATHWORKS_LICENSING_ENDPOINT: ['prod', 'stage', 'dev']
+              RELEASE: ['latest', 'R2020a']
+
+  # Test all MATLAB releases against all supported executors
+  test-releases:
+    jobs:
+      - test-install:
+          matrix:
+            parameters:
               RELEASE: ['latest', 'R2020b', 'R2020a']
+              EXECUTOR: ['ubuntu-2004', 'ubuntu-1604']
