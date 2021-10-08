@@ -40,7 +40,7 @@ jobs:
       matrix:
         stage: ['prod']
         release: ['latest', 'R2021b', 'R2021a', 'R2020b', 'R2020a']
-        image: ['ubuntu-20.04', 'ubuntu-18.04', 'ubuntu-16.04']
+        image: ['ubuntu-20.04', 'ubuntu-18.04']
     runs-on: ${{ matrix.image }}
     env:
       MATHWORKS_LICENSING_ENDPOINT: ${{ matrix.stage }}
