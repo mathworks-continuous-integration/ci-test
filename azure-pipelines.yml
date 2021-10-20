@@ -12,4 +12,4 @@ jobs:
     parameters:
       MATHWORKS_LICENSING_ENDPOINT: ['prod']
       RELEASE: ['latest', 'R2021b', 'R2021a', 'R2020b', 'R2020a']
-      IMAGE: ['ubuntu-20.04', 'ubuntu-18.04', 'ubuntu-16.04']
+      IMAGE: ['ubuntu-20.04', 'ubuntu-18.04']
