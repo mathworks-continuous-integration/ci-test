@@ -19,7 +19,7 @@ jobs:
         default: latest
       EXECUTOR:
         type: executor
-        default: ubuntu-1604
+        default: ubuntu-2004
     executor: <<parameters.EXECUTOR>>
     environment:
       MATHWORKS_LICENSING_ENDPOINT: <<parameters.MATHWORKS_LICENSING_ENDPOINT>>
