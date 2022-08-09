@@ -4,9 +4,6 @@ orbs:
   matlab: mathworks/matlab@0
 
 executors:
-  ubuntu-1604:
-    machine:
-      image: ubuntu-1604:202101-01
   ubuntu-2004:
     machine:
       image: ubuntu-2004:202101-01
@@ -51,4 +48,4 @@ workflows:
           matrix:
             parameters:
               RELEASE: ['latest', 'R2021b', 'R2021a', 'R2020b', 'R2020a']
-              EXECUTOR: ['ubuntu-2004', 'ubuntu-1604']
+              EXECUTOR: ['ubuntu-2004']
