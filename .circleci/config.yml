@@ -4,9 +4,9 @@ orbs:
   matlab: mathworks/matlab@0
 
 executors:
-  ubuntu-2004:
+  ubuntu-2204:
     machine:
-      image: ubuntu-2004:202101-01
+      image: ubuntu-2204:2023.04.2
 
 jobs:
   test-install:
@@ -19,7 +19,7 @@ jobs:
         default: latest
       EXECUTOR:
         type: executor
-        default: ubuntu-2004
+        default: ubuntu-2204
     executor: <<parameters.EXECUTOR>>
     environment:
       MATHWORKS_LICENSING_ENDPOINT: <<parameters.MATHWORKS_LICENSING_ENDPOINT>>
@@ -48,4 +48,4 @@ workflows:
           matrix:
             parameters:
               RELEASE: ['latest', 'R2023a', 'R2022b', 'R2022a', 'R2021b', 'R2021a', 'R2020b', 'R2020a']
-              EXECUTOR: ['ubuntu-2004']
+              EXECUTOR: ['ubuntu-2204']

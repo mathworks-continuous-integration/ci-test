@@ -16,12 +16,12 @@ jobs:
       matrix:
         stage: ['prod', 'stage', 'dev']
         release: ['latest', 'R2020a']
-        image: ['ubuntu-18.04']
+        image: ['ubuntu-22.04']
     runs-on: ${{ matrix.image }}
     env:
       MATHWORKS_LICENSING_ENDPOINT: ${{ matrix.stage }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up MATLAB
         uses: matlab-actions/setup-matlab@v1
         with:
@@ -40,12 +40,12 @@ jobs:
       matrix:
         stage: ['prod']
         release: ['latest', 'R2023a', 'R2022b', 'R2022a', 'R2021b', 'R2021a', 'R2020b', 'R2020a']
-        image: ['ubuntu-20.04', 'ubuntu-18.04']
+        image: ['ubuntu-20.04', 'ubuntu-22.04']
     runs-on: ${{ matrix.image }}
     env:
       MATHWORKS_LICENSING_ENDPOINT: ${{ matrix.stage }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up MATLAB
         uses: matlab-actions/setup-matlab@v1
         with:
