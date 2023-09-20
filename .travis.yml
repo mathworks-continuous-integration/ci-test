@@ -2,6 +2,7 @@ language: matlab
 # Test all MATLAB releases
 matlab:
 - latest
+- R2023b
 - R2023a
 - R2022b
 - R2022a
